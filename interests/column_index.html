@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>📖 칼럼 선택 - 대학생 생활 연구소</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #667eea;
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .page-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 300;
+        }
+
+        .columns-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .column-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .column-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .column-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .column-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .column-description {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .column-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .column-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            text-align: center;
+            padding: 2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 3rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .page-title {
+                font-size: 2.2rem;
+            }
+
+            .columns-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .column-card {
+                padding: 2rem;
+                margin: 0 1rem;
+            }
+
+            .main-container {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-brand">대학생 생활 연구소</a>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">홈</a></li>
+                <li><a href="../projects.html" class="nav-link">실험실 소개</a></li>
+                <li><a href="../test/test.html" class="nav-link">심리테스트</a></li>
+                <li><a href="../contact.html" class="nav-link">문의하기</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <div class="page-header">
+            <h1 class="page-title">📖 칼럼 주제 선택</h1>
+            <p class="page-subtitle">대학생활의 다양한 이야기를 만나보세요</p>
+        </div>
+
+        <div class="columns-grid">
+            <div class="column-card">
+                <span class="column-icon">📚</span>
+                <h3 class="column-title">벼락치기의 미학</h3>
+                <p class="column-description">벼락치기의 생존 전략과 집중 루틴을 소개합니다. 단기간 집중력을 극대화하는 방법을 알아보세요.</p>
+                <a href="cramming.html" class="column-btn">칼럼 보기</a>
+            </div>
+
+            <div class="column-card">
+                <span class="column-icon">⌛</span>
+                <h3 class="column-title">과제 미루기의 심리</h3>
+                <p class="column-description">과제를 미루는 나의 심리와 대처법을 알아봅니다. 미루기 습관을 극복하는 실용적인 팁을 제공합니다.</p>
+                <a href="delay.html" class="column-btn">칼럼 보기</a>
+            </div>
+
+            <div class="column-card">
+                <span class="column-icon">🧠</span>
+                <h3 class="column-title">집중력 루틴</h3>
+                <p class="column-description">공부 루틴과 환경 설정으로 집중력을 높여보세요. 나만의 집중 시스템을 구축하는 방법을 안내합니다.</p>
+                <a href="focus.html" class="column-btn">칼럼 보기</a>
+            </div>
+
+            <div class="column-card">
+                <span class="column-icon">💖</span>
+                <h3 class="column-title">캠퍼스 연애</h3>
+                <p class="column-description">대학생의 연애 스타일과 감정 표현법을 이야기합니다. 건강한 캠퍼스 연애 문화를 만들어가요.</p>
+                <a href="love.html" class="column-btn">칼럼 보기</a>
+            </div>
+
+            <div class="column-card">
+                <span class="column-icon">👥</span>
+                <h3 class="column-title">팀플 성향 분석</h3>
+                <p class="column-description">팀플에서 나의 역할은 무엇인지 분석해보세요. 효과적인 팀워크를 위한 소통 전략을 제시합니다.</p>
+                <a href="teamwork.html" class="column-btn">칼럼 보기</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 대학생 생활 연구소 | 나를 알아가는 5분 실험실</p>
+    </footer>
+</body>
+</html>

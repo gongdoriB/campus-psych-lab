@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>실험실 소개 - 대학생 생활 연구소</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .navbar-scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .navbar-nav {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: #64748b;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #3b82f6;
+            transform: translateY(-1px);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8rem 0 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="white" opacity="0.1"><polygon points="0,0 1000,0 1000,100 0,20"/></svg>');
+            background-size: cover;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Content */
+        .content-container {
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Intro Section */
+        .intro-section {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 4rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .intro-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .intro-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1e293b;
+        }
+
+        .intro-content p {
+            color: #64748b;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .intro-content strong {
+            color: #3b82f6;
+        }
+
+        .intro-visual {
+            text-align: center;
+        }
+
+        .intro-icon {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+
+        /* Features Grid */
+        .features-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+
+        .section-header p {
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+
+        .feature-description {
+            color: #64748b;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 2rem;
+        }
+
+        .feature-list li {
+            color: #64748b;
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .feature-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(107, 114, 128, 0.1);
+            color: #4b5563;
+            border: 2px solid rgba(107, 114, 128, 0.2);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(107, 114, 128, 0.2);
+            transform: translateY(-2px);
+            color: #4b5563;
+        }
+
+        .badge {
+            background: #6b7280;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-left: 0.5rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: white;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .navbar-nav {
+                display: none;
+            }
+            
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .page-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .intro-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .intro-section, .feature-card {
+                padding: 2rem;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">🧪 대학생 생활 연구소</a>
+            <ul class="navbar-nav">
+                <li><a href="index.html" class="nav-link">홈</a></li>
+                <li><a href="projects.html" class="nav-link active">실험실 소개</a></li>
+                <li><a href="test/test.html" class="nav-link">심리테스트</a></li>
+                <li><a href="contact.html" class="nav-link">문의하기</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container">
+            <h1 class="page-title">🧪 실험실 소개</h1>
+            <p class="page-subtitle">대학생의 심리와 생활을 연결하는 다양한 실험 콘텐츠를 만나보세요</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="content-container">
+        <div class="container">
+            <!-- 연구소 소개 -->
+            <div class="intro-section">
+                <div class="intro-grid">
+                    <div class="intro-content">
+                        <h2>🎓 대학생 생활 연구소란?</h2>
+                        <p>
+                            대학생 생활 연구소는 시험, 연애, 팀플, 스트레스 등 캠퍼스 안에서 누구나 겪는 일상 속 심리와 습관을
+                            <strong>테스트 · 칼럼 · 기록 · 데이터 분석</strong>을 통해 살펴보는 공간입니다.
+                        </p>
+                        <p>
+                            진짜 중요한 건 성적이 아니라 <strong>내가 어떻게 사는지</strong>라는 걸 함께 실험하고 발견하는 5분짜리 작은 연구소를 지향합니다.
+                        </p>
+                    </div>
+                    <div class="intro-visual">
+                        <div class="intro-icon">🔬</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 실험실 콘텐츠 -->
+            <div class="features-section">
+                <div class="section-header">
+                    <h2>🧪 실험실 콘텐츠 탐험하기</h2>
+                    <p>대학생의 삶을 심리와 데이터로 풀어낸 다양한 실험실 콘텐츠를 확인해보세요.</p>
+                </div>
+
+                <div class="features-grid">
+                    <!-- 심리 테스트 -->
+                    <div class="feature-card">
+                        <span class="feature-icon">🧠</span>
+                        <h3 class="feature-title">심리 테스트</h3>
+                        <p class="feature-description">
+                            시험 벼락치기, 연애, 팀플, 집중력, 과제 미루기 등<br>
+                            대학생이라면 겪는 상황을 심리 테스트로 풀어보세요.
+                        </p>
+                        <ul class="feature-list">
+                            <li>10문항 내외, 빠르고 가볍게 가능</li>
+                            <li>결과에 따라 유형별 해설 제공</li>
+                            <li>유형별로 칼럼/추천 팁 연결</li>
+                        </ul>
+                        <div class="feature-buttons">
+                            <a href="test/test.html" class="btn-primary">
+                                테스트 하러 가기
+                            </a>
+                            <a href="guide/result_guide.html" class="btn-secondary">
+                                결과 해설 모아보기
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 생활 칼럼 -->
+                    <div class="feature-card">
+                        <span class="feature-icon">📖</span>
+                        <h3 class="feature-title">생활 칼럼</h3>
+                        <p class="feature-description">
+                            시험기간 루틴, 팀플 회의법, 감정 조절 등<br>
+                            공감 가는 주제를 칼럼 형식으로 나누어요.
+                        </p>
+                        <ul class="feature-list">
+                            <li>유저가 직접 글 추가 가능 (나무위키 스타일)</li>
+                            <li>각 칼럼마다 댓글 기능 지원</li>
+                            <li>각 주제별로 정리된 카테고리 구성</li>
+                        </ul>
+                        <div class="feature-buttons">
+                            <a href="interests/column_index.html" class="btn-primary">
+                                칼럼 보기
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 감정 기록소 -->
+                    <div class="feature-card">
+                        <span class="feature-icon">📊</span>
+                        <h3 class="feature-title">감정 기록소</h3>
+                        <p class="feature-description">
+                            나의 하루 감정을 한 줄로 기록하고,<br>
+                            일별 감정 추이와 키워드를 시각화해보세요.
+                        </p>
+                        <ul class="feature-list">
+                            <li>하루 감정 기록 & 해시태그 입력</li>
+                            <li>감정 변화 트렌드 시각화</li>
+                            <li>익명 공유 가능 (선택)</li>
+                        </ul>
+                        <div class="feature-buttons">
+                            <a href="emotion/emotion.html" class="btn-primary">
+                                기록소 들어가기
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 리서치 프로젝트 -->
+                    <div class="feature-card">
+                        <span class="feature-icon">📈</span>
+                        <h3 class="feature-title">
+                            리서치 프로젝트
+                            <span class="badge">준비 중</span>
+                        </h3>
+                        <p class="feature-description">
+                            대학생의 심리, 학업 스트레스, 시간 관리 등<br>
+                            실제 데이터를 바탕으로 한 인사이트 제공
+                        </p>
+                        <ul class="feature-list">
+                            <li>교내·외 설문 기반 리포트</li>
+                            <li>시각적 그래프 & 차트 활용</li>
+                            <li>테스트 결과와 연계된 분석</li>
+                        </ul>
+                        <div class="feature-buttons">
+                            <button class="btn-secondary" disabled>
+                                준비 중
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div style="font-size: 0.9rem;">&copy; 2025 대학생 생활 연구소 | 캠퍼스의 삶을 탐구하는 실험실</div>
+                </div>
+                <div style="display: flex; gap: 1rem; font-size: 0.9rem;">
+                    <a href="projects.html">프로젝트소개</a>
+                    <span>·</span>
+                    <a href="#">이용약관</a>
+                    <span>·</span>
+                    <a href="contact.html">문의하기</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 네비게이션 스크롤 효과
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('navbar-scrolled');
+            } else {
+                navbar.classList.remove('navbar-scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

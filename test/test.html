@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>심리테스트 - 대학생 생활 연구소</title>
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .navbar-scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .navbar-nav {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: #64748b;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #3b82f6;
+            transform: translateY(-1px);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8rem 0 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="white" opacity="0.1"><polygon points="0,0 1000,0 1000,100 0,20"/></svg>');
+            background-size: cover;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Content */
+        .content-container {
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 4rem;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            padding: 1.5rem;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #3b82f6;
+            display: block;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+
+        /* Test Cards */
+        .tests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .test-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 3rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            min-height: 280px;
+        }
+
+        .test-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1e293b;
+            line-height: 1.3;
+        }
+
+        .test-description {
+            color: #64748b;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        .test-meta {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+            color: #64748b;
+            padding: 1rem;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 12px;
+        }
+
+        .btn-test {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-test::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-test:hover::before {
+            left: 100%;
+        }
+
+        .btn-test:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            color: white;
+        }
+
+        /* Info Section */
+        .info-section {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .info-item h4 {
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-item p {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: white;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .navbar-nav {
+                display: none;
+            }
+            
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .page-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .test-card, .stats-section, .info-section {
+                padding: 2rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .tests-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .test-card {
+                padding: 2rem;
+                min-height: auto;
+            }
+            
+            .test-title {
+                font-size: 1.5rem;
+            }
+            
+            .test-description {
+                font-size: 1rem;
+            }
+            
+            .test-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-container">
+            <a href="../index.html" class="navbar-brand">🧪 대학생 생활 연구소</a>
+            <ul class="navbar-nav">
+                <li><a href="../index.html" class="nav-link">홈</a></li>
+                <li><a href="../projects.html" class="nav-link">실험실 소개</a></li>
+                <li><a href="test.html" class="nav-link active">심리테스트</a></li>
+                <li><a href="../contact.html" class="nav-link">문의하기</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container">
+            <h1 class="page-title">🧠 심리테스트</h1>
+            <p class="page-subtitle">5분만 투자해서 나를 더 깊이 알아가는 시간을 가져보세요</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="content-container">
+        <div class="container">
+            <!-- Stats Section -->
+            <div class="stats-section">
+                <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem;">📊 테스트 현황</h2>
+                <p style="color: #64748b; margin-bottom: 2rem;">지금까지 많은 대학생들이 참여했어요!</p>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number">12,847</span>
+                        <div class="stat-label">총 참여자 수</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">5</span>
+                        <div class="stat-label">테스트 종류</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">4.8</span>
+                        <div class="stat-label">평균 만족도</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test Selection -->
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">🎯 테스트 선택하기</h2>
+                <p style="color: #64748b; font-size: 1.1rem;">궁금한 테스트를 선택해서 시작해보세요!</p>
+            </div>
+
+            <!-- Test Cards -->
+            <div class="tests-grid">
+                <div class="test-card">
+                    <h3 class="test-title">📚 벼락치기 유형 테스트</h3>
+                    <p class="test-description">시험 전날 밤, 나는 어떤 벼락치기 스타일일까? 몰입형, 좌절형, 체념형 중 당신의 학습 대처 스타일을 정확히 진단해보세요. 효과적인 학습 전략도 함께 제공됩니다.</p>
+                    <div class="test-meta">
+                        <span>⏱️ 약 3-5분</span>
+                        <span>📝 10문항</span>
+                        <span>🎯 4가지 유형</span>
+                    </div>
+                    <a href="test_cramming.html" class="btn-test">
+                        테스트 시작하기 →
+                    </a>
+                </div>
+
+                <div class="test-card">
+                    <h3 class="test-title">⌛ 과제 미루기 유형 테스트</h3>
+                    <p class="test-description">과제를 미루는 나만의 패턴을 발견해보세요. 완벽주의형, 회피형, 무관심형 등 다양한 미루기 유형을 분석하고, 각 유형별 맞춤 해결책을 제시합니다.</p>
+                    <div class="test-meta">
+                        <span>⏱️ 약 3-5분</span>
+                        <span>📝 8문항</span>
+                        <span>🎯 5가지 유형</span>
+                    </div>
+                    <a href="test_delay.html" class="btn-test">
+                        테스트 시작하기 →
+                    </a>
+                </div>
+
+                <div class="test-card">
+                    <h3 class="test-title">🧠 집중력 루틴 테스트</h3>
+                    <p class="test-description">나에게 맞는 최적의 집중 환경은 무엇일까? 소음 민감도, 시간대별 집중력, 휴식 패턴 등을 종합 분석하여 개인 맞춤형 집중력 향상 가이드를 제공합니다.</p>
+                    <div class="test-meta">
+                        <span>⏱️ 약 4-6분</span>
+                        <span>📝 12문항</span>
+                        <span>🎯 6가지 유형</span>
+                    </div>
+                    <a href="test_focus.html" class="btn-test">
+                        테스트 시작하기 →
+                    </a>
+                </div>
+
+                <div class="test-card">
+                    <h3 class="test-title">💖 캠퍼스 연애 유형 테스트</h3>
+                    <p class="test-description">대학생활 속 나의 연애 스타일을 알아보세요. 적극형, 신중형, 이상형 추구형 등 다양한 연애 패턴을 분석하고, 건강한 캠퍼스 연애를 위한 조언을 제공합니다.</p>
+                    <div class="test-meta">
+                        <span>⏱️ 약 4-6분</span>
+                        <span>📝 15문항</span>
+                        <span>🎯 7가지 유형</span>
+                    </div>
+                    <a href="test_love.html" class="btn-test">
+                        테스트 시작하기 →
+                    </a>
+                </div>
+
+                <div class="test-card">
+                    <h3 class="test-title">👥 팀플 성향 테스트</h3>
+                    <p class="test-description">팀 프로젝트에서 나는 어떤 역할을 할까? 리더형, 서포터형, 아이디어형, 실행형 등 팀워크에서의 강점을 파악하고, 효과적인 협업 전략을 제시합니다.</p>
+                    <div class="test-meta">
+                        <span>⏱️ 약 3-5분</span>
+                        <span>📝 10문항</span>
+                        <span>🎯 5가지 유형</span>
+                    </div>
+                    <a href="test_team.html" class="btn-test">
+                        테스트 시작하기 →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Additional Info */
+            <div class="info-section">
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">💡 테스트 이용 안내</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <h4>🎯 정확한 결과</h4>
+                        <p>심리학 이론을 바탕으로 제작된 검증된 테스트입니다.</p>
+                    </div>
+                    <div class="info-item">
+                        <h4>🔒 개인정보 보호</h4>
+                        <p>개인정보는 수집하지 않으며, 결과는 익명으로 처리됩니다.</p>
+                    </div>
+                    <div class="info-item">
+                        <h4>📱 언제든지</h4>
+                        <p>PC, 모바일 어디서든 편리하게 테스트할 수 있습니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div style="font-size: 0.9rem;">&copy; 2025 대학생 생활 연구소 | 캠퍼스의 삶을 탐구하는 실험실</div>
+                </div>
+                <div style="display: flex; gap: 1rem; font-size: 0.9rem;">
+                    <a href="../projects.html">프로젝트소개</a>
+                    <span>·</span>
+                    <a href="#">이용약관</a>
+                    <span>·</span>
+                    <a href="../contact.html">문의하기</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 네비게이션 스크롤 효과
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('navbar-scrolled');
+            } else {
+                navbar.classList.remove('navbar-scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

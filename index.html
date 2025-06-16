@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>대학생 생활 연구소 - 나를 알아가는 5분 실험실</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .navbar-scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .navbar-nav {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: #64748b;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #3b82f6;
+            transform: translateY(-1px);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #4f46e5, #ec4899);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .floating-element:nth-child(2) { top: 60%; left: 80%; animation-delay: 2s; }
+        .floating-element:nth-child(3) { top: 80%; left: 20%; animation-delay: 4s; }
+        .floating-element:nth-child(4) { top: 30%; left: 70%; animation-delay: 1s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #4f46e5 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            from { filter: drop-shadow(0 0 20px rgba(79, 70, 229, 0.5)); }
+            to { filter: drop-shadow(0 0 40px rgba(236, 72, 153, 0.8)); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-hero {
+            display: inline-flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .btn-hero-primary {
+            background: linear-gradient(135deg, #4f46e5, #ec4899);
+            color: white;
+            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-hero-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(79, 70, 229, 0.5);
+            color: white;
+        }
+
+        .btn-hero-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-hero-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-3px);
+            color: white;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 5rem 0;
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #4f46e5 0%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        @media (max-width: 1200px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            padding: 1.75rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #4f46e5, #ec4899);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-text {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+            margin-bottom: 1.25rem;
+            font-size: 0.95rem;
+        }
+
+        .feature-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1.25rem;
+            background: linear-gradient(135deg, #4f46e5, #ec4899);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-btn:hover {
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.3);
+        }
+
+        /* Tests Section */
+        .tests-section {
+            padding: 5rem 0;
+            background: linear-gradient(180deg, #1e293b 0%, #334155 100%);
+        }
+
+        .tests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .test-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .test-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .test-title {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .test-description {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-test {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn-test:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+            color: white;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 3rem 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: white;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .navbar-nav {
+                display: none;
+            }
+            
+            .hero-title {
+                font-size: clamp(2rem, 6vw, 3rem);
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-hero {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .tests-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">🧪 대학생 생활 연구소</a>
+            <ul class="navbar-nav">
+                <li><a href="index.html" class="nav-link active">홈</a></li>
+                <li><a href="projects.html" class="nav-link">실험실 소개</a></li>
+                <li><a href="test/test.html" class="nav-link">심리테스트</a></li>
+                <li><a href="contact.html" class="nav-link">문의하기</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <div class="floating-elements">
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">
+                나를 알아가는<br>
+                <span style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">5분 실험실</span>
+            </h1>
+            <p class="hero-subtitle">
+                캠퍼스에서 겪는 수많은 일들을<br>
+                데이터와 공감으로 정리해보는 심리 실험실 ✨
+            </p>
+            <div class="hero-buttons">
+                <a href="test/test.html" class="btn-hero btn-hero-primary">
+                    ▶️ 테스트 시작하기
+                </a>
+                <a href="projects.html" class="btn-hero btn-hero-secondary">
+                    🧭 실험실 둘러보기
+                </a>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator" onclick="scrollToContent()">
+            <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">⬇️</div>
+            <small>스크롤하여 더 보기</small>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="content-section" id="content">
+        <div class="container">
+            <h2 class="section-title">🔍 실험 콘텐츠</h2>
+            <p class="section-subtitle">심리 테스트, 칼럼, 감정기록 등 다양한 콘텐츠로 구성되어 있어요!</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h5 class="feature-title">심리 테스트</h5>
+                    <p class="feature-text">벼락치기, 팀플, 집중력 등 나의 성향을 알아보는 테스트</p>
+                    <a href="test/test.html" class="feature-btn">
+                        ➡️ 바로가기
+                    </a>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📖</div>
+                    <h5 class="feature-title">생활 칼럼</h5>
+                    <p class="feature-text">대학생이 공감할 수 있는 생존 팁과 공감 이야기</p>
+                    <a href="interests/column_index.html" class="feature-btn">
+                        ➡️ 바로가기
+                    </a>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🧾</div>
+                    <h5 class="feature-title">결과 해설</h5>
+                    <p class="feature-text">테스트 결과를 유형별로 분석한 가이드를 확인해보세요</p>
+                    <a href="guide/result_guide.html" class="feature-btn">
+                        ➡️ 바로가기
+                    </a>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h5 class="feature-title">감정 기록소</h5>
+                    <p class="feature-text">오늘의 감정을 남기고, 나의 심리 패턴을 분석해보세요</p>
+                    <a href="emotion/emotion.html" class="feature-btn">
+                        ➡️ 바로가기
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tests Section -->
+    <section class="tests-section" id="tests">
+        <div class="container">
+            <h2 class="section-title">📋 심리 테스트</h2>
+            <p class="section-subtitle">총 5가지 유형별 테스트로 나를 알아가보세요!</p>
+            
+            <div class="tests-grid">
+                <div class="test-card">
+                    <h4 class="test-title">📚 벼락치기 유형 테스트</h4>
+                    <p class="test-description">시험 전날, 당신은 '몰입형'? '좌절형'? 당신의 학습 대처 스타일을 알아보세요.</p>
+                    <a href="test/test_cramming.html" class="btn-test">
+                        ▶️ 테스트 시작
+                    </a>
+                </div>
+                
+                <div class="test-card">
+                    <h4 class="test-title">💖 캠퍼스 연애 유형</h4>
+                    <p class="test-description">짝사랑, 현실 연애, 이상형? 연애 감정의 흐름 속 당신의 유형은?</p>
+                    <a href="test/test_love.html" class="btn-test">
+                        ▶️ 테스트 시작
+                    </a>
+                </div>
+                
+                <div class="test-card">
+                    <h4 class="test-title">👥 팀플 성향 테스트</h4>
+                    <p class="test-description">리더형? 관망형? 팀플 속에서 보이는 당신의 협업 유형을 진단해보세요.</p>
+                    <a href="test/test_team.html" class="btn-test">
+                        ▶️ 테스트 시작
+                    </a>
+                </div>
+                
+                <div class="test-card">
+                    <h4 class="test-title">🧠 공부 집중력 유형</h4>
+                    <p class="test-description">한 곳에 집중이 잘 되는가요? 다양한 자극에 흔들리는가요? 집중 습관을 파악해보세요.</p>
+                    <a href="test/test_focus.html" class="btn-test">
+                        ▶️ 테스트 시작
+                    </a>
+                </div>
+                <div class="test-card">
+                    <h4 class="test-title">⏰ 과제 미루기 유형</h4>
+                    <p class="test-description">마감 직전에 몰아서? 계획적으로? 당신의 과제 처리 방식을 알아보세요.</p>
+                    <a href="test/test_delay.html" class="btn-test">
+                        ▶️ 테스트 시작
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div style="font-size: 0.9rem;">&copy; 2025 대학생 생활 연구소 | 캠퍼스의 삶을 탐구하는 실험실</div>
+                </div>
+                <div style="display: flex; gap: 1rem; font-size: 0.9rem;">
+                    <a href="projects.html">프로젝트소개</a>
+                    <span>·</span>
+                    <a href="#">이용약관</a>
+                    <span>·</span>
+                    <a href="contact.html">문의하기</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 스크롤 애니메이션
+        function scrollToContent() {
+            document.getElementById('content').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        // 네비게이션 스크롤 효과
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('navbar-scrolled');
+            } else {
+                navbar.classList.remove('navbar-scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

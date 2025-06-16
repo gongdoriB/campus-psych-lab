@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>⏰ 과제 미루기 칼럼</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* 네비게이션 */
+        .navbar {
+            background: rgba(255, 255, 255, 0.1) !important;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .navbar-nav {
+            gap: 1rem;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem !important;
+            border-radius: 25px;
+        }
+
+        .nav-link:hover {
+            color: white !important;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* 칼럼 박스 */
+        .column-box {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+
+        h1 {
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            color: #333;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            font-size: 1.5rem;
+        }
+
+        p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .highlight {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 10px;
+            font-weight: 500;
+        }
+
+        blockquote {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 10px;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .edit-link {
+            color: #999;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-left: 1rem;
+        }
+
+        .edit-link:hover {
+            color: #667eea;
+        }
+
+        /* 폼 스타일 */
+        .add-section, .comment-section {
+            background: #f8f9ff;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+
+        .btn {
+            border-radius: 25px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-outline-primary {
+            border: 2px solid #667eea;
+            color: #667eea;
+            background: white;
+        }
+
+        .btn-outline-primary:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline-secondary {
+            border: 2px solid #6c757d;
+            color: #6c757d;
+            background: white;
+        }
+
+        .btn-outline-secondary:hover {
+            background: #6c757d;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .list-group-item {
+            background: white;
+            border: 1px solid #e9ecef;
+            color: #333;
+            margin-bottom: 0.5rem;
+            border-radius: 10px;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .column-box {
+                margin: 1rem;
+                padding: 2rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .navbar-nav {
+                flex-direction: column !important;
+                gap: 0.5rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container px-5">
+            <a class="navbar-brand" href="../index.html">🧪 대학생 생활 연구소</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="../index.html">홈</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../projects.html">실험실 소개</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../test/test.html">심리테스트</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../contact.html">문의하기</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="column-box">
+        <h1 contenteditable="true">⏰ 과제 미루기, 나만의 극복 전략 <a href="#" class="edit-link">[수정]</a></h1>
+        <p contenteditable="true"><strong>"내일부터 진짜 할 거야!"</strong> 이 말을 몇 번이나 반복했나요? 과제 미루기는 대학생의 영원한 숙제입니다. 하지만 미루는 것도 나름의 이유가 있어요.</p>
+
+        <h2 contenteditable="true">🧠 1. 왜 미루게 될까? <a href="#" class="edit-link">[수정]</a></h2>
+        <p contenteditable="true">완벽주의, 두려움, 또는 단순히 재미없어서... 미루는 이유는 다양합니다. 자신이 왜 미루는지 파악하는 것이 첫 번째 단계예요. <strong>원인을 알아야 해결책도 찾을 수 있거든요.</strong></p>
+        <div class="highlight" contenteditable="true">📌 TIP: 미루는 패턴을 일주일 정도 관찰해보세요. 언제, 어떤 과제를 미루는지 기록해보면 패턴이 보여요.</div>
+
+        <h2 contenteditable="true">⚡ 2. 작은 시작의 힘 <a href="#" class="edit-link">[수정]</a></h2>
+        <p contenteditable="true">큰 과제는 부담스럽지만, 작은 단위로 쪼개면 시작하기 쉬워집니다. "보고서 쓰기"보다는 "자료 3개 찾기"가 훨씬 덜 부담스럽죠. 5분만 해보자는 마음으로 시작하면 의외로 계속하게 됩니다.</p>
+
+        <blockquote contenteditable="true">"완벽한 계획보다는 불완전한 실행이 낫다."</blockquote>
+
+        <h2 contenteditable="true">🎯 3. 환경과 보상 시스템 <a href="#" class="edit-link">[수정]</a></h2>
+        <p contenteditable="true">미루기 쉬운 환경에서 벗어나세요. 침대에서 공부하지 말고, 스마트폰은 다른 방에 두세요. 그리고 작은 목표를 달성할 때마다 자신에게 보상을 주는 것도 좋은 방법입니다.</p>
+
+        <p class="text-end" contenteditable="true"><em>작성자: 캠퍼스 인싸 연구소</em></p>
+
+        <div class="add-section mt-4">
+            <h4>✍️ 내용 추가하기</h4>
+            <textarea id="newContent" class="form-control mb-2" rows="3" placeholder="추가할 내용을 입력하세요"></textarea>
+            <button class="btn btn-outline-primary" onclick="addContent()">추가</button>
+        </div>
+
+        <div class="comment-section mt-5">
+            <h4>💬 댓글</h4>
+            <input type="text" id="commentName" class="form-control mb-2" placeholder="닉네임" />
+            <textarea id="commentText" class="form-control mb-2" rows="3" placeholder="댓글을 입력하세요"></textarea>
+            <button class="btn btn-secondary" onclick="addComment()">댓글 작성</button>
+            <ul id="commentList" class="list-group mt-3"></ul>
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="column_index.html" class="btn btn-outline-secondary">← 칼럼 목록으로 돌아가기</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/column.js"></script>
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>팀플 성향 테스트 해설 - 대학생 생활 연구소</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui,
+          sans-serif;
+        background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+        min-height: 100vh;
+        color: #333;
+      }
+
+      .navbar {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        padding: 1rem 0;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      .nav-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-decoration: none;
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+      }
+
+      .nav-links a:hover {
+        background: rgba(116, 185, 255, 0.1);
+        color: #4a90e2;
+      }
+
+      .main-content {
+        padding: 4rem 0;
+      }
+
+      .guide-container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        border-radius: 30px;
+        padding: 4rem;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .guide-title {
+        text-align: center;
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin-bottom: 3rem;
+        background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        position: relative;
+      }
+
+      .guide-title::after {
+        content: "";
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 4px;
+        background: linear-gradient(90deg, #74b9ff, #0984e3);
+        border-radius: 2px;
+      }
+
+      .type-card {
+        background: linear-gradient(135deg, #f5faff 0%, #e8f2ff 100%);
+        border: 2px solid transparent;
+        background-clip: padding-box;
+        border-radius: 20px;
+        padding: 2.5rem;
+        margin-bottom: 2.5rem;
+        box-shadow: 0 10px 25px rgba(74, 144, 226, 0.1);
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .type-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #74b9ff, #0984e3);
+        border-radius: 20px 20px 0 0;
+      }
+
+      .type-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(74, 144, 226, 0.2);
+      }
+
+      .type-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .type-emoji {
+        font-size: 2.5rem;
+        margin-right: 1.5rem;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+      }
+
+      .type-title {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: #4a90e2;
+      }
+
+      .type-content p {
+        margin-bottom: 1rem;
+        line-height: 1.8;
+        color: #555;
+        font-size: 1.05rem;
+      }
+
+      .type-content strong {
+        color: #4a90e2;
+        font-weight: 700;
+      }
+
+      .action-buttons {
+        text-align: center;
+        margin-top: 4rem;
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 1.2rem 2.5rem;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        font-size: 1.05rem;
+      }
+
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.9);
+        color: #4a90e2;
+        border: 2px solid #4a90e2;
+        box-shadow: 0 8px 20px rgba(74, 144, 226, 0.1);
+      }
+
+      .btn-secondary:hover {
+        background: #4a90e2;
+        color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(74, 144, 226, 0.3);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+        color: white;
+        box-shadow: 0 8px 20px rgba(116, 185, 255, 0.3);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(116, 185, 255, 0.4);
+        color: white;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 0 1rem;
+        }
+
+        .guide-container {
+          padding: 2.5rem;
+          margin: 1rem;
+        }
+
+        .guide-title {
+          font-size: 2.2rem;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .action-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .type-header {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .type-emoji {
+          margin-right: 0;
+          margin-bottom: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="container">
+        <div class="nav-content">
+          <a href="../index.html" class="logo">대학생 생활 연구소</a>
+          <ul class="nav-links">
+            <li><a href="../index.html">홈</a></li>
+            <li><a href="../projects.html">실험실 소개</a></li>
+            <li><a href="../test/test.html">심리테스트</a></li>
+            <li><a href="../contact.html">문의하기</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <div class="container">
+        <div class="guide-container">
+          <h1 class="guide-title">🤝 팀플 성향 테스트 해설</h1>
+
+          <div class="type-card">
+            <div class="type-header">
+              <span class="type-emoji">🧩</span>
+              <h3 class="type-title">전략가형 팀플러</h3>
+            </div>
+            <div class="type-content">
+              <p>
+                <strong>기본 성향:</strong> 프로젝트의 큰 그림을 그리며 방향성을
+                제시하는 리더형입니다. 체계적인 계획 수립과 전체 흐름 조율에
+                능합니다.
+              </p>
+              <p>
+                <strong>장점:</strong> 뛰어난 조직력, 목표 달성 중심의 사고방식,
+                시간과 자원의 효율적 분배
+              </p>
+              <p>
+                <strong>주의점:</strong> 지나치게 주도적으로 보일 수 있으며
+                타인의 의견 수렴이 부족할 수 있음
+              </p>
+              <p>
+                <strong>팀플 팁:</strong> 주도성은 유지하되, 구성원의 의견을
+                적극적으로 반영하는 균형 잡힌 소통을 시도해보세요.
+              </p>
+            </div>
+          </div>
+
+          <div class="type-card">
+            <div class="type-header">
+              <span class="type-emoji">🔥</span>
+              <h3 class="type-title">추진가형 돌격러</h3>
+            </div>
+            <div class="type-content">
+              <p>
+                <strong>기본 성향:</strong> 아이디어 실행과 행동에 강한
+                실천가로, 팀플 내 에너지 역할을 합니다. 빠른 추진력으로 초기
+                동력을 이끌어갑니다.
+              </p>
+              <p>
+                <strong>장점:</strong> 높은 실행력, 적극적인 아이디어 제안, 팀
+                분위기 주도
+              </p>
+              <p>
+                <strong>주의점:</strong> 빠른 속도에 비해 세부 사항이 놓치기
+                쉽고, 협의 과정이 생략될 수 있음
+              </p>
+              <p>
+                <strong>팀플 팁:</strong> 추진 전 짧은 브레인스토밍 시간을 갖고,
+                팀원들과 진행 방향을 공유하는 습관을 들이면 더욱 강력해집니다.
+              </p>
+            </div>
+          </div>
+
+          <div class="type-card">
+            <div class="type-header">
+              <span class="type-emoji">🤝</span>
+              <h3 class="type-title">조력자형 서포터</h3>
+            </div>
+            <div class="type-content">
+              <p>
+                <strong>기본 성향:</strong> 팀 내 분위기와 관계 유지에 중점을
+                두며 갈등 중재와 보조 업무에 최적화된 서포트형입니다.
+              </p>
+              <p>
+                <strong>장점:</strong> 유연한 태도, 감정적 안정, 갈등 관리 능력
+              </p>
+              <p>
+                <strong>주의점:</strong> 주도성이 부족해보일 수 있으며, 자신의
+                역할이 과소평가될 수 있음
+              </p>
+              <p>
+                <strong>팀플 팁:</strong> 분위기 조율만이 아닌, 핵심 업무에도
+                의견을 내며 존재감을 자연스럽게 드러내보세요.
+              </p>
+            </div>
+          </div>
+
+          <div class="type-card">
+            <div class="type-header">
+              <span class="type-emoji">🌪</span>
+              <h3 class="type-title">유연형 생존러</h3>
+            </div>
+            <div class="type-content">
+              <p>
+                <strong>기본 성향:</strong> 상황에 따라 자신의 역할을 바꾸며
+                유연하게 움직이는 적응형입니다. 주어진 환경에 맞춰 빠르게
+                반응합니다.
+              </p>
+              <p>
+                <strong>장점:</strong> 다양한 역할을 소화하는 능력, 팀 흐름 파악
+                능력, 스트레스 적응력
+              </p>
+              <p>
+                <strong>주의점:</strong> 팀 내 주체성이 약해 보이거나 방향이
+                없는 듯 보일 수 있음
+              </p>
+              <p>
+                <strong>팀플 팁:</strong> 자신의 강점을 명확히 인식하고, 유연함
+                속에서도 기준점을 설정하는 것이 중요합니다.
+              </p>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <a href="../test/test_team.html" class="btn btn-secondary"
+              >← 다시 테스트하기</a
+            >
+            <a href="../test/test.html" class="btn btn-primary"
+              >다른 테스트 보러 가기 →</a
+            >
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

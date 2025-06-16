@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>감정 기록소 - 대학생 생활 연구소</title>
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* 네비게이션 */
+        .navbar {
+            background: rgba(255, 255, 255, 0.1) !important;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem 0;
+        }
+
+        .navbar .container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem !important;
+            border-radius: 25px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .nav-link:hover {
+            color: white !important;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        @media (min-width: 768px) {
+            .navbar .container {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .nav-menu {
+                flex-direction: row;
+                width: auto;
+                gap: 1rem;
+            }
+        }
+
+        /* 헤더 섹션 */
+        .hero-section {
+            text-align: center;
+            padding: 4rem 0;
+            color: white;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        /* 메인 콘텐츠 */
+        .main-content {
+            padding: 2rem 0 4rem;
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem 2rem;
+            border: none;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-body {
+            padding: 2.5rem;
+            color: #333;
+        }
+
+        /* 폼 스타일 */
+        .form-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.8rem;
+            font-size: 1.05rem;
+        }
+
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.15);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* 감정 버튼 */
+        .emotion-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .emotion-btn {
+            border: 2px solid #e9ecef;
+            background: white;
+            color: #333;
+            border-radius: 30px;
+            padding: 0.75rem 1.25rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .emotion-btn:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+            transform: translateY(-2px);
+        }
+
+        .emotion-btn.active {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-color: #667eea;
+            color: white;
+        }
+
+        /* 버튼 스타일 */
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-outline-primary {
+            border: 2px solid #667eea;
+            color: #667eea;
+            background: white;
+            border-radius: 25px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-primary:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* 통계 섹션 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem 1rem;
+            background: rgba(248, 249, 255, 0.8);
+            border-radius: 15px;
+            border: 2px solid rgba(230, 235, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            background: rgba(248, 249, 255, 1);
+            border-color: rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* 차트 스타일 */
+        .chart-container {
+            background: rgba(248, 249, 255, 0.8);
+            border-radius: 15px;
+            padding: 2rem 1.5rem;
+            margin-bottom: 2rem;
+            border: 2px solid rgba(230, 235, 255, 0.6);
+        }
+
+        .chart-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .chart-bars {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            height: 100px;
+            gap: 0.5rem;
+        }
+
+        .chart-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        .bar {
+            width: 100%;
+            max-width: 30px;
+            border-radius: 5px;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .bar:hover {
+            transform: scale(1.1);
+        }
+
+        .bar-label {
+            font-size: 0.8rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* 기록 리스트 */
+        .record-item {
+            border-bottom: 1px solid rgba(233, 236, 239, 0.8);
+            padding: 2rem 0;
+        }
+
+        .record-item:last-child {
+            border-bottom: none;
+        }
+
+        .record-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .record-emotion {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+
+        .record-title {
+            font-weight: 600;
+            color: #333;
+            flex: 1;
+        }
+
+        .record-date {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .record-content {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .record-tags {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(233, 236, 239, 0.8);
+            color: #666;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: white;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .navbar-nav {
+                flex-direction: column !important;
+                gap: 0.5rem !important;
+            }
+            
+            .card-body {
+                padding: 2rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .emotion-buttons {
+                justify-content: center;
+                gap: 0.5rem;
+            }
+            
+            .emotion-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container px-5">
+            <a class="navbar-brand" href="../index.html">🧪 대학생 생활 연구소</a>
+            <div class="nav-menu">
+                <a class="nav-link" href="../index.html">홈</a>
+                <a class="nav-link" href="../projects.html">실험실 소개</a>
+                <a class="nav-link" href="../test/test.html">심리테스트</a>
+                <a class="nav-link" href="../contact.html">문의하기</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container px-5">
+            <h1 class="hero-title">📊 감정 기록소</h1>
+            <p class="hero-subtitle">오늘의 감정을 기록하고, 나의 심리 패턴을 분석해보세요</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container px-5">
+            <div class="row">
+                <!-- 감정 기록 폼 -->
+                <div class="col-lg-6 mb-4">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="bi bi-emoji-smile"></i>
+                                오늘의 감정 기록하기
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <form id="emotionForm">
+                                <div class="mb-3">
+                                    <label for="emotionText" class="form-label">오늘 하루는 어땠나요?</label>
+                                    <textarea class="form-control" id="emotionText" rows="3" placeholder="오늘의 감정을 자유롭게 적어보세요..." style="width: 100%; max-width: none;"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">감정 상태</label>
+                                    <div class="emotion-buttons">
+                                        <button type="button" class="emotion-btn" data-emotion="😊">😊 좋음</button>
+                                        <button type="button" class="emotion-btn" data-emotion="😐">😐 보통</button>
+                                        <button type="button" class="emotion-btn" data-emotion="😔">😔 우울</button>
+                                        <button type="button" class="emotion-btn" data-emotion="😤">😤 화남</button>
+                                        <button type="button" class="emotion-btn" data-emotion="😴">😴 피곤</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="emotionTags" class="form-label">태그 (선택)</label>
+                                    <input type="text" class="form-control" id="emotionTags" placeholder="#시험 #팀플 #연애 #친구 등">
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="bi bi-save me-2"></i>기록하기
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 감정 통계 -->
+                <div class="col-lg-6 mb-4">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="bi bi-graph-up"></i>
+                                나의 감정 통계
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="stats-grid">
+                                <div class="stat-item">
+                                    <div class="stat-number">7</div>
+                                    <div class="stat-label">총 기록 일수</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">😊</div>
+                                    <div class="stat-label">가장 많은 감정</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">5</div>
+                                    <div class="stat-label">연속 기록</div>
+                                </div>
+                            </div>
+                            
+                            <div class="chart-container">
+                                <div class="chart-title">최근 7일 감정 변화</div>
+                                <div class="chart-bars">
+                                    <div class="chart-bar">
+                                        <div class="bar" style="height: 60px; background: linear-gradient(45deg, #28a745, #20c997);"></div>
+                                        <div class="bar-label">월</div>
+                                    </div>
+                                    <div class="chart-bar">
+                                        <div class="bar" style="height: 40px; background: linear-gradient(45deg, #007bff, #6610f2);"></div>
+                                        <div class="bar-label">화</div>
+                                    </div>
+                                    <div class="chart-bar">
+                                        <div class="bar" style="height: 30px; background: linear-gradient(45deg, #ffc107, #fd7e14);"></div>
+                                        <div class="bar-label">수</div>
+                                    </div>
+                                    <div class="chart-bar">
+                                        <div class="bar" style="height: 70px; background: linear-gradient(45deg, #28a745, #20c997);"></div>
+                                        <div class="bar-label">목</div>
+                                    </div>
+                                    <div class="chart-bar">
+                                        <div class="bar" style="height: 50px; background: linear-gradient(45deg, #17a2b8, #6f42c1);"></div>
+                                        <div class="bar-label">금</div>
+                                    </div>
+                                    <div class="chart-bar">
+                                        <div class="bar" style="height: 80px; background: linear-gradient(45deg, #28a745, #20c997);"></div>
+                                        <div class="bar-label">토</div>
+                                    </div>
+                                    <div class="chart-bar">
+                                        <div class="bar" style="height: 45px; background: linear-gradient(45deg, #007bff, #6610f2);"></div>
+                                        <div class="bar-label">일</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center">
+                                <a href="share.html" class="btn btn-outline-primary">
+                                    <i class="bi bi-share me-2"></i>감정 공유하기
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 최근 기록 -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="bi bi-clock-history"></i>
+                                최근 감정 기록
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="record-item">
+                                <div class="record-header">
+                                    <div class="d-flex align-items-center flex-grow-1">
+                                        <span class="record-emotion">😊</span>
+                                        <span class="record-title">오늘은 정말 좋은 하루였다!</span>
+                                    </div>
+                                    <span class="record-date">2025-01-12</span>
+                                </div>
+                                <p class="record-content">시험이 끝나고 친구들과 맛있는 걸 먹었다. 스트레스가 확 풀렸다.</p>
+                                <div class="record-tags">
+                                    <span class="tag">#시험끝</span>
+                                    <span class="tag">#친구</span>
+                                    <span class="tag">#맛집</span>
+                                </div>
+                            </div>
+                            <div class="record-item">
+                                <div class="record-header">
+                                    <div class="d-flex align-items-center flex-grow-1">
+                                        <span class="record-emotion">😔</span>
+                                        <span class="record-title">시험 준비가 너무 힘들다</span>
+                                    </div>
+                                    <span class="record-date">2025-01-11</span>
+                                </div>
+                                <p class="record-content">벼락치기로 공부하고 있는데 머리에 안 들어온다. 불안하다.</p>
+                                <div class="record-tags">
+                                    <span class="tag">#시험</span>
+                                    <span class="tag">#스트레스</span>
+                                    <span class="tag">#불안</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto">
+                    <div class="small">&copy; 2025 대학생 생활 연구소 | 캠퍼스의 삶을 탐구하는 실험실</div>
+                </div>
+                <div class="col-auto">
+                    <a class="small" href="#">프로젝트소개</a>
+                    <span class="mx-1">·</span>
+                    <a class="small" href="#">이용약관</a>
+                    <span class="mx-1">·</span>
+                    <a class="small" href="#">문의하기</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/emotion.js"></script>
+    <script>
+        // 감정 버튼 클릭 이벤트
+        document.querySelectorAll('.emotion-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.emotion-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // 네비게이션 스크롤 효과
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('navbar-scrolled');
+            } else {
+                navbar.classList.remove('navbar-scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>감정 통계 보기 - 감정 기록소</title>
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/stat.css" rel="stylesheet" />
+</head>
+<body class="bg-light">
+<main class="container py-5">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
+        <div class="container px-5">
+            <a class="navbar-brand fw-bolder text-primary" href="index.html">대학생 생활 연구소</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ms-auto small fw-bold">
+                    <li class="nav-item"><a class="nav-link" href="index.html">홈</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="projects.html">실험실 소개</a></li>
+                    <li class="nav-item"><a class="nav-link" href="test/test.html">심리테스트</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">문의하기</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <h1 class="mb-4 text-center">📊 감정 통계 보기</h1>
+    <p class="text-center text-muted mb-5">최근 감정 기록을 바탕으로 분석한 통계를 확인해보세요. 당신의 감정 변화는 당신의 삶을 비추는 거울이에요.</p>
+
+    <!-- 설명 카드 -->
+    <div class="alert alert-info shadow-sm text-center">
+        감정 통계는 단순한 숫자가 아닌, 나를 이해하는 데이터입니다. 하루하루의 기록이 모여 심리 패턴을 만들어냅니다.
+    </div>
+
+    <!-- 감정 통계 카드 -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">✨ 가장 많이 느낀 감정</h5>
+                    <p class="fs-2">😊 행복 (35%)</p>
+                    <p class="text-muted small">행복은 자주 찾는 감정이에요. 어떤 순간에 가장 많이 느꼈는지 돌아보세요.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">📈 주간 감정 변화</h5>
+                    <canvas id="emotionChart" height="150"></canvas>
+                    <p class="text-muted small mt-2">주간 감정 흐름을 파악하면 컨디션 조절에 도움이 됩니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 시간대별 감정 추이 -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">🕒 시간대별 감정 변화</h5>
+                    <p class="text-muted">하루 중 감정 기복이 어떻게 변화하는지 시각적으로 확인해보세요. 아침에 예민하거나, 밤에 평온한 패턴을 발견할 수 있어요.</p>
+                    <canvas id="timeEmotionChart" height="150"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 요일별 감정 평균 -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">📅 요일별 감정 평균</h5>
+                    <canvas id="dayEmotionChart" height="150"></canvas>
+                    <p class="text-muted small mt-2">어느 요일에 감정 기복이 큰지 확인해보고, 더 나은 한 주를 계획해보세요.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 감정 해시태그 빈도 -->
+    <div class="row g-4">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">🏷️ 가장 많이 사용한 해시태그</h5>
+                    <ul class="list-inline text-muted">
+                        <li class="list-inline-item">#발표</li>
+                        <li class="list-inline-item">#팀플</li>
+                        <li class="list-inline-item">#휴식</li>
+                        <li class="list-inline-item">#집중안됨</li>
+                        <li class="list-inline-item">#친구와_수다</li>
+                    </ul>
+                    <p class="small text-muted">자주 등장하는 해시태그는 당신의 일상을 반영합니다. 자주 쓰는 키워드를 통해 자신의 생활 패턴을 돌아보세요.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../js/stat.js"></script>
+</body>
+</html>
