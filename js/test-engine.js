@@ -1,3 +1,8 @@
+function getCampusPsychTest(testId) {
+    const tests = window.CAMPUS_PSYCH_TESTS || {};
+    return tests[testId];
+}
+
 function createTestRunner(testData) {
     const questions = testData.questions;
     const score = { A: 0, B: 0, C: 0, D: 0 };
@@ -43,7 +48,14 @@ function createTestRunner(testData) {
     };
 }
 
-function initCampusPsychTest(testData) {
+function initCampusPsychTest(testId) {
+    const testData = getCampusPsychTest(testId);
+
+    if (!testData) {
+        console.error(`테스트 데이터를 찾을 수 없습니다: ${testId}`);
+        return;
+    }
+
     const runner = createTestRunner(testData);
 
     window.showQuestion = runner.showQuestion;
@@ -54,6 +66,7 @@ function initCampusPsychTest(testData) {
 }
 
 if (typeof window !== "undefined") {
+    window.getCampusPsychTest = getCampusPsychTest;
     window.createTestRunner = createTestRunner;
     window.initCampusPsychTest = initCampusPsychTest;
 }

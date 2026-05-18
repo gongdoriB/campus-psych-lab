@@ -1,1 +1,1 @@
-initCampusPsychTest(window.CAMPUS_PSYCH_TESTS.focus);
+initCampusPsychTest("focus");
